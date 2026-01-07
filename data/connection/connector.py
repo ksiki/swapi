@@ -3,7 +3,7 @@ import requests
 
 class Connector:
     def __init__(self, url: str):
-        self.__url = url
+        self.__url: str = url
         self.__connect()
 
     @property
@@ -19,11 +19,18 @@ class Connector:
             return False
 
     @property
-    def data(self) -> dict:
-        return self.__responce.json()
+    def data(self) -> list[dict]:
+        data = self.__responce.json()
+        if isinstance(data, dict):
+            data = [data]
+
+        return data
 
     def reconnect(self):
         self.__connect()
 
     def __connect(self):
         self.__responce = requests.get(self.__url)
+
+class ConnectorError(RuntimeError):
+    pass
