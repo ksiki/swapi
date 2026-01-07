@@ -13,6 +13,15 @@ class URLBuilder:
             category = self.__formatted_url(category)
 
         return urljoin(self.__base_url, category)
+    
+    def build_id_url(self, category: str, id: str) -> str:
+        category = self.build_category_url(category)
+        temp_url: str = urljoin(self.__base_url, category)
+
+        if not self.__is_valid_url(id):
+            id = self.__formatted_url(id)
+
+        return urljoin(temp_url, id)
 
     def __formatted_url(self, url: str) -> str:
         """
@@ -34,7 +43,3 @@ class URLBuilder:
             return False
 
         return True
-
-
-u = URLBuilder("https://swapi.info/api")
-print(u.build_category_url("/people/"))
