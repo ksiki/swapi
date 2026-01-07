@@ -29,8 +29,17 @@ class Connector:
     def reconnect(self):
         self.__connect()
 
+    def change_url(self, new_url: str):
+        if self.url == new_url:
+            return
+        
+        self.__url = new_url
+        self.__connect()
+
     def __connect(self):
-        self.__responce = requests.get(self.__url)
+        self.__responce = requests.get(self.url)
 
 class ConnectorError(RuntimeError):
-    pass
+    @staticmethod
+    def raise_error(url: str):
+        raise ConnectorError(f"Request failed for {url}")
