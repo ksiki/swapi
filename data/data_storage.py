@@ -9,7 +9,7 @@ class DataStore:
         self.__url_builder: URLBuilder = URLBuilder(api)
 
     def existing_categories(self) -> dict:
-        self.update_connector(self.__api)
+        self.__update_connector(self.__api)
 
         if not self.__connector.is_successfully:
             raise ConnectorError.raise_error(self.__api)
@@ -18,7 +18,7 @@ class DataStore:
 
     def category(self, category: str) -> list[dict]:
         url: str = self.__url_builder.build_category_url(category)
-        self.update_connector(url)
+        self.__update_connector(url)
 
         if not self.__connector.is_successfully:
             raise ConnectorError.raise_error(url)
@@ -27,17 +27,17 @@ class DataStore:
     
     def item_for_id(self, category: str, id: str) -> list[dict]:
         url: str = self.__url_builder.build_id_url(category, id)
-        self.update_connector(url)
+        self.__update_connector(url)
 
         if not self.__connector.is_successfully:
             raise ConnectorError.raise_error(url)
 
         return self.__connector.data
 
-    def update_connector(self, url: str):
+    def __update_connector(self, url: str):
         if self.__connector.url == url:
             return
 
-        self.__connector.change_url(url)
+        self.__connector = Connector(url)
         if not self.__connector.is_successfully:
             self.__connector.reconnect()
