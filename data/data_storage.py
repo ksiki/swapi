@@ -1,4 +1,4 @@
-from swapi.data.connection.connector import Connector, ConnectorError
+from swapi.connection.connector import Connector, ConnectorError
 from swapi.utils.url_builder import URLBuilder
 
 
