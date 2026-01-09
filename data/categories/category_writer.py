@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 import pandas as pd
 
+
 class CategoryWriter(ABC):
     ENGINE = "openpyxl"
 
@@ -28,6 +29,6 @@ class CategoryWriter(ABC):
     def _data_is_not_empty(self, data: list[dict]) -> bool:
         count_peopls: int = len(data)
         if count_peopls <= 0:
-            return False
+            return False        
         
         return True
