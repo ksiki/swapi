@@ -31,8 +31,3 @@ class Connector:
 
     def __connect(self):
         self.__responce = requests.get(self.url)
-
-class ConnectorError(RuntimeError):
-    @staticmethod
-    def raise_error(url: str):
-        raise ConnectorError(f"Request failed for {url}")
