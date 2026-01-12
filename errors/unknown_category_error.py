@@ -1,0 +1,2 @@
+class UnknownCategoryError(LookupError):
+    pass
