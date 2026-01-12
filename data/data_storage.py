@@ -1,4 +1,4 @@
-from swapi.connection.connector_error import ConnectorError
+from swapi.errors.connector_error import ConnectorError
 from swapi.connection.connector import Connector
 from swapi.utils.url_builder import URLBuilder
 
@@ -9,13 +9,13 @@ class DataStore:
         self.__connector: Connector = Connector(api)
         self.__url_builder: URLBuilder = URLBuilder(api)
 
-    def existing_categories(self) -> dict:
+    def existing_categories(self) -> list[str]:
         self.__update_connector(self.__api)
 
         if not self.__connector.is_successfully:
             raise ConnectorError.raise_error(self.__api)
 
-        return self.__connector.data[0]
+        return list(self.__connector.data[0])
 
     def category(self, category: str) -> list[dict]:
         url: str = self.__url_builder.build_category_url(category)
@@ -23,7 +23,6 @@ class DataStore:
 
         if not self.__connector.is_successfully:
             raise ConnectorError.raise_error(url)
-        
         return self.__connector.data
     
     def item_for_id(self, category: str, id: str) -> list[dict]:
