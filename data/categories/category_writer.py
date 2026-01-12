@@ -4,9 +4,12 @@ import pandas as pd
 
 class CategoryWriter(ABC):
     ENGINE = "openpyxl"
+    FILE_FORMAT = ".xlsx"
 
     def __init__(self, path: str):
         self.__path: str = path
+        if not self.__path.endswith(self.FILE_FORMAT):
+            self.__path += self.FILE_FORMAT
 
     @property
     @abstractmethod
@@ -18,7 +21,7 @@ class CategoryWriter(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def __format_data(self, data: list[dict]) -> list[dict]:
+    def format_data(self, data: list[dict]) -> list[dict]:
         raise NotImplementedError
 
     def _write_to_excel(self, data: list[dict], category: str):

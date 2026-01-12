@@ -1,5 +1,5 @@
 from swapi.data.categories.category_writer import CategoryWriter
-import swapi.utils.formatted as formatted
+import swapi.utils.extractor as extractor
 
 
 class StarshipsWriter(CategoryWriter):
@@ -13,15 +13,15 @@ class StarshipsWriter(CategoryWriter):
         return self.__CATEGORY
 
     def write(self, data: list[dict]):
-        data = self.__format_data(data)
+        data = self.format_data(data)
         super()._write_to_excel(data, self.__CATEGORY)
 
-    def __format_data(self, data: list[dict]) -> list[dict]:
+    def format_data(self, data: list[dict]) -> list[dict]:
         if not self._data_is_not_empty(data):
             return data
 
         for starship in data:
-            starship["pilots"] = formatted.id_from_urls(starship.get("pilots"))  # pyright: ignore[reportArgumentType]
-            starship["films"] = formatted.id_from_urls(starship.get("films"))  # pyright: ignore[reportArgumentType]
+            starship["pilots"] = extractor.id_from_urls(starship.get("pilots"))  # pyright: ignore[reportArgumentType]
+            starship["films"] = extractor.id_from_urls(starship.get("films"))  # pyright: ignore[reportArgumentType]
 
         return data
