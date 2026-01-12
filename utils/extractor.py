@@ -1,11 +1,12 @@
 def id_from_url(url: str) -> str:
-    if len(url) <= 0:
+    if url is None or len(url) <= 0:
         return ""
     
     split: list[str] = url.split("/")  
-    return split[len(split)-1]
+    return split[len(split) - 1]
 
-def id_from_urls(urls: list[str]) -> list[str]:
+
+def id_from_urls(urls: list) -> list:
     id: list[str] = []
 
     for url in urls:
