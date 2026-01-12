@@ -1,0 +1,1 @@
+API = "https://swapi.info/api/"
